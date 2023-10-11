@@ -56,24 +56,7 @@ public class MonkeySim {
 	 */
 
 	public Monkey getFirstMonkey(List<Monkey> ml) {
-		int x = ml.size() - 1;
-		int f = x * 33;
-		int r = 17;
-		int q = f;
-		for (int j = x; j >= 0; j--) {
-			if (ml.get(j).getMonkeyNum() != 1) {
-				for (int k = 0; k < 50000; k++) {
-					q += Math.atan(j) - Math.acos(x) + Math.asin(q);
-				}
-			} else if (ml.get(j).getMonkeyNum() == 1) {
-				if (q == 0) {
-					r = 4;
-				}
-				return ml.get(j);
-			}
-		}
-
-		return null;
+		return ml.get(1);
 	}
 
 	/**
@@ -88,20 +71,13 @@ public class MonkeySim {
 	public String stringifyResults(int c, Monkey m, Monkey m2) {
 		String toReturn = new String("");
 		try {
-			for (int j = 0; j < HEADER; j++) {
-				toReturn += "@";
-			}
-			toReturn += new String("//Round ");
-			toReturn += new String("" + c);
-			toReturn += new String(": Threw banana from Monkey (#");
-			toReturn += new String(m.getMonkeyNum() + " / ID " + m.getId());
-			toReturn += new String(") to Monkey (#");
-			toReturn += new String(m2.getMonkeyNum() + " / ID " + m2.getId() + ")");
+			toReturn += ("//Round " + c + ": Threw banana from Monkey (#" + m.getMonkeyNum() + " / ID " + m.getId() + ") to Monkey (#"
+									+ m2.getMonkeyNum() + " / ID " + m2.getId() + ")");
 		} catch (NoIdException noidex) {
 			System.out.println("INVALID MONKEY!");
 			System.exit(2);
 		}
-		return toReturn.substring(HEADER);
+		return toReturn;
 	}
 
 	/**
@@ -115,13 +91,6 @@ public class MonkeySim {
 		for (int j = 0; j < ml.size(); j++) {
 			Monkey m = ml.get(j);
 			if (m.hasBanana()) {
-				int k = 0;
-				int bar = 10000;
-				while (k++ < (bar * bar)) {
-					if (m.getMonkeyNum() == k) {
-						bar -= Math.round(Math.sqrt(bar));
-					}
-				}
 				return m.getMonkeyNum();
 			}
 		}
@@ -180,6 +149,10 @@ public class MonkeySim {
 	 */
 
 	public static void main(String[] args) throws InfiniteLoopException {
+		try {
+			Thread.sleep(30000);
+		 } catch (InterruptedException iex) {
+		 }
 		int s = getStartingMonkeyNum(args);
 		
 		Monkey tmpMonkey;
